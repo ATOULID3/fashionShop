@@ -207,42 +207,48 @@
                         </div>
                     </div>
                     <div class="row">
+                        @foreach($paginatedProducts as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                                <div class="product__item__pic set-bg" data-setbg="{{ $product['image'] }}" style="background-image: url('{{ $product['image'] }}');">
                                     <ul class="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                        <li><a href="#"><img src="{{ asset('img/icon/heart.png') }}" alt=""></a></li>
+                                        <li><a href="#"><img src="{{ asset('img/icon/compare.png') }}" alt=""> <span>Compare</span></a></li>
+                                        <li><a href="{{ route('products.details', $product['id']) }}"><img src="{{ asset('img/icon/search.png') }}" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6>Piqué Biker Jacket</h6>
+                                    <h6>{{ Str::limit($product['title'], 30) }}</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
                                     <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        @php
+                                            $rating = round($product['rating']['rate']); // Convert rating to stars
+                                        @endphp
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $rating)
+                                                <i class="fa fa-star"></i>
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif
+                                        @endfor
                                     </div>
-                                    <h5>$67.24</h5>
+                                    <h5>${{ number_format($product['price'], 2) }}</h5>
                                     <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
+                                        <label for="pc-{{ $product['id'] }}-1">
+                                            <input type="radio" id="pc-{{ $product['id'] }}-1">
                                         </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
+                                        <label class="active black" for="pc-{{ $product['id'] }}-2">
+                                            <input type="radio" id="pc-{{ $product['id'] }}-2">
                                         </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
+                                        <label class="grey" for="pc-{{ $product['id'] }}-3">
+                                            <input type="radio" id="pc-{{ $product['id'] }}-3">
                                         </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
+                    @endforeach
+                        {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item sale">
                                 <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
                                     <span class="label">Sale</span>
@@ -277,8 +283,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        </div> --}}
+                        {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="img/product/product-4.jpg">
                                     <ul class="product__hover">
@@ -630,16 +636,32 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
-                                <a class="active" href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <span>...</span>
-                                <a href="#">21</a>
+                                @if ($paginatedProducts->onFirstPage())
+                                    <a class="disabled">&laquo;</a>
+                                @else
+                                    <a href="{{ $paginatedProducts->previousPageUrl() }}">&laquo;</a>
+                                @endif
+
+                                @foreach(range(1, $paginatedProducts->lastPage()) as $page)
+                                    @if ($page == $paginatedProducts->currentPage())
+                                        <a class="active" href="#">{{ $page }}</a>
+                                    @elseif($page == 1 || $page == $paginatedProducts->lastPage() || abs($page - $paginatedProducts->currentPage()) <= 1)
+                                        <a href="{{ $paginatedProducts->url($page) }}">{{ $page }}</a>
+                                    @elseif($page == 2 || $page == $paginatedProducts->lastPage() - 1)
+                                        <span>...</span>
+                                    @endif
+                                @endforeach
+
+                                @if ($paginatedProducts->hasMorePages())
+                                    <a href="{{ $paginatedProducts->nextPageUrl() }}">&raquo;</a>
+                                @else
+                                    <a class="disabled">&raquo;</a>
+                                @endif
                             </div>
                         </div>
                     </div>
