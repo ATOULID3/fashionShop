@@ -129,7 +129,10 @@
                                         <input type="text" value="1">
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+                                <a href="#" class="primary-btn" data-id="{{ $product['id'] }}"
+                                data-title="{{ $product['title'] }}"
+                                data-price="{{ $product['price'] }}"
+                                data-image="{{ $product['image'] }}">add to cart</a>
                             </div>
                             <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
@@ -423,4 +426,58 @@
         </div>
     </section> --}}
     <!-- Related Section End -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    // Add event listeners to all "Add to Cart" buttons
+    document.querySelectorAll('.primary-btn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Get product details from the button's data attributes
+            const productId = this.getAttribute('data-id');
+            const productTitle = this.getAttribute('data-title');
+            const productPrice = parseFloat(this.getAttribute('data-price'));
+            const productImage = this.getAttribute('data-image');
+
+            // Add the product to the cart
+            addToCart(productId, productTitle, productPrice, productImage);
+        });
+    });
+
+    // Function to add a product to the cart
+    function addToCart(id, title, price, image) {
+        // Retrieve the current cart from session storage
+        let cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+
+        // Check if the product is already in the cart
+        if (cart[id]) {
+            // If it exists, increase the quantity
+            cart[id].quantity += 1;
+        } else {
+            // If it doesn't exist, add it to the cart
+            cart[id] = {
+                title: title,
+                price: price,
+                image: image,
+                quantity: 1
+            };
+        }
+
+        // Save the updated cart back to session storage
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+
+        // Optional: Notify the user
+        Swal.fire({
+            icon: 'success',
+            title: 'Added to Cart!',
+            text: `${title} has been added to your cart.`,
+            showConfirmButton: false,
+            timer: 2500 // Auto-close after 1.5 seconds
+        });
+        updateCartSummary();
+
+
+    }
+});
+    </script>
 @endsection

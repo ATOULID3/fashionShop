@@ -219,7 +219,10 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6>{{ Str::limit($product['title'], 30) }}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <a href="#" class="add-cart"                    data-id="{{ $product['id'] }}"
+                                    data-title="{{ $product['title'] }}"
+                                    data-price="{{ $product['price'] }}"
+                                    data-image="{{ $product['image'] }}">+ Add To Cart</a>
                                     <div class="rating">
                                         @php
                                             $rating = round($product['rating']['rate']); // Convert rating to stars
@@ -670,4 +673,58 @@
         </div>
     </section>
     <!-- Shop Section End -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    // Add event listeners to all "Add to Cart" buttons
+    document.querySelectorAll('.add-cart').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Get product details from the button's data attributes
+            const productId = this.getAttribute('data-id');
+            const productTitle = this.getAttribute('data-title');
+            const productPrice = parseFloat(this.getAttribute('data-price'));
+            const productImage = this.getAttribute('data-image');
+
+            // Add the product to the cart
+            addToCart(productId, productTitle, productPrice, productImage);
+        });
+    });
+
+    // Function to add a product to the cart
+    function addToCart(id, title, price, image) {
+        // Retrieve the current cart from session storage
+        let cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+
+        // Check if the product is already in the cart
+        if (cart[id]) {
+            // If it exists, increase the quantity
+            cart[id].quantity += 1;
+        } else {
+            // If it doesn't exist, add it to the cart
+            cart[id] = {
+                title: title,
+                price: price,
+                image: image,
+                quantity: 1
+            };
+        }
+
+        // Save the updated cart back to session storage
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+
+        // Optional: Notify the user
+        Swal.fire({
+            icon: 'success',
+            title: 'Added to Cart!',
+            text: `${title} has been added to your cart.`,
+            showConfirmButton: false,
+            timer: 2500 // Auto-close after 1.5 seconds
+        });
+        updateCartSummary();
+
+
+    }
+});
+    </script>
 @endsection

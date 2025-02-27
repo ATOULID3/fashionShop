@@ -14,6 +14,8 @@
     <!-- Google Font -->
     <link href="{{ asset('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap')}}"
     rel="stylesheet">
+    <!-- Add this to the <head> section of your HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
@@ -123,8 +125,8 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="{{ asset('img/icon/search.png') }}" alt=""></a>
                         {{-- <a href="./shopping-cart"><img src="img/icon/heart.png" alt=""></a> --}}
-                        <a href="./shopping-cart"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="./shopping-cart"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span id="cart-count">0</span></a>
+                        <div class="price" id="cart-total">$0.00</div>
                     </div>
                 </div>
             </div>
@@ -222,6 +224,28 @@
     <script src="{{ asset('js/mixitup.min.js')}}"></script>
     <script src="{{ asset('js/owl.carousel.min.js')}}"></script>
     <script src="{{ asset('js/main.js')}}"></script>
+    <script>
+function updateCartSummary() {
+    // Retrieve the cart from session storage
+    const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+
+    // Calculate total number of items and total price
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    for (const [id, item] of Object.entries(cart)) {
+        totalItems += item.quantity; // Add quantity to total items
+        totalPrice += item.price * item.quantity; // Add price * quantity to total price
+    }
+
+    // Update the cart summary in the HTML
+    document.getElementById('cart-count').textContent = totalItems;
+    document.getElementById('cart-total').textContent = totalPrice.toFixed(2);
+}
+
+// Call the updateCartSummary function to show the cart summary when the page loads
+updateCartSummary();
+    </script>
 </body>
 
 </html>
