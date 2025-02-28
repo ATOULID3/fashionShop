@@ -211,6 +211,159 @@
             </form>
         </div>
     </div>
+    <!-- Cookie Consent Banner -->
+<div id="cookie-consent-banner" class="cookie-consent-banner">
+    <div class="cookie-consent-content">
+        <p>
+            We use cookies to improve your experience on our site. By providing your email, you agree to our
+            <a href="#" target="_blank">Privacy Policy</a>.
+        </p>
+        <form id="cookie-consent-form">
+            <input type="email" id="user-email" placeholder="Enter your email" required />
+            <button type="submit">Accept</button>
+            <button type="button" id="decline-cookies">Decline</button>
+        </form>
+    </div>
+</div>
+<style>
+    /* Cookie Consent Banner Styles */
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none; /* Hidden by default */
+}
+
+.cookie-consent-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.cookie-consent-content p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.cookie-consent-content a {
+    color: #4caf50;
+    text-decoration: underline;
+}
+
+.cookie-consent-content form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.cookie-consent-content input[type="email"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.cookie-consent-content button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.cookie-consent-content button[type="submit"] {
+    background: #4caf50;
+    color: #fff;
+}
+
+.cookie-consent-content button[type="button"] {
+    background: #f44336;
+    color: #fff;
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const cookieForm = document.getElementById('cookie-consent-form');
+    const declineButton = document.getElementById('decline-cookies');
+
+    // Check if the user has already consented
+    if (!getCookie('user_consent')) {
+        // Show the cookie consent banner
+        cookieBanner.style.display = 'block';
+    }
+
+    // Handle form submission
+    cookieForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get the user's email
+        const userEmail = document.getElementById('user-email').value;
+
+        // Save the email and consent in cookies
+        setCookie('user_email', userEmail, 365); // Store email for 1 year
+        setCookie('user_consent', 'true', 365); // Store consent for 1 year
+
+        // Hide the banner
+        cookieBanner.style.display = 'none';
+
+        // Show a success message
+        Swal.fire({
+            icon: 'success',
+            title: 'Thank you!',
+            text: 'Your email has been saved.',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+
+    // Handle decline button
+    declineButton.addEventListener('click', function () {
+        // Hide the banner
+        cookieBanner.style.display = 'none';
+
+        // Show a message
+        Swal.fire({
+            icon: 'info',
+            title: 'Cookies Declined',
+            text: 'You can change your mind anytime.',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+});
+
+// Function to set a cookie
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value}; ${expires}; path=/`;
+}
+
+// Function to get a cookie
+function getCookie(name) {
+    const cookieName = `${name}=`;
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith(cookieName)) {
+            return cookie.substring(cookieName.length, cookie.length);
+        }
+    }
+    return null;
+}
+</script>
     <!-- Search End -->
 
     <!-- Js Plugins -->
