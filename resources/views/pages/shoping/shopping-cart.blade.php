@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="#">Continue Shopping</a>
+                                <a href="#" id="send-to-whatsapp">Continue Shopping On Whatssap</a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -109,7 +109,40 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set up event listeners for quantity inputs and remove buttons
     setupQuantityInputs();
     setupRemoveItemButtons();
+    // Set up the "Send to WhatsApp" button
+    setupWhatsAppButton();
 });
+// Function to set up the "Send to WhatsApp" button
+function setupWhatsAppButton() {
+    const whatsappButton = document.getElementById('send-to-whatsapp');
+    whatsappButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // Generate the WhatsApp message
+        const message = generateWhatsAppMessage();
+
+        // Open WhatsApp with the message
+        const phoneNumber = '1234567890'; // Replace with your WhatsApp business number
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+}
+// Function to generate the WhatsApp message
+function generateWhatsAppMessage() {
+    const cart = JSON.parse(sessionStorage.getItem('cart')) || {};
+    let message = 'Hello! I would like to purchase the following items:\n\n';
+
+    // Add product details to the message
+    for (const [id, item] of Object.entries(cart)) {
+        message += `- ${item.title} (Quantity: ${item.quantity}, Price: $${item.price.toFixed(2)})\n`;
+    }
+
+    // Add the total price to the message
+    const totalPrice = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+    message += `\nTotal: $${totalPrice.toFixed(2)}\n\nPlease confirm the order. Thank you!`;
+
+    return message;
+}
 
 // Function to render the cart items and summary
 function renderCart() {

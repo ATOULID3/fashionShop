@@ -240,7 +240,7 @@ function updateCartSummary() {
 
     // Update the cart summary in the HTML
     document.getElementById('cart-count').textContent = totalItems;
-    document.getElementById('cart-total').textContent = totalPrice.toFixed(2);
+    document.getElementById('cart-total').textContent = `$${totalPrice.toFixed(2)}`;
 }
 
 // Call the updateCartSummary function to show the cart summary when the page loads
