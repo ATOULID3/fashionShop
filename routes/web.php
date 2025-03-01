@@ -41,3 +41,28 @@ Route::get('/shopping-cart', function () {
 Route::get('/checkout', function () {
     return view('pages.shoping.checkout');
 });
+// ********************admin******************************
+Route::get('/login', function () {
+    return view('auth.login');
+});
+Route::get('/register', function () {
+    return view('auth.register');
+});
+// ********************admin******************************
+Route::get('/admin', function () {
+    return view('admin.pages.index');
+});
+// ********************clients******************************
+Route::get('/clients', function () {
+    return view('admin.pages.clients');
+});
+Route::get('/clients-details', function () {
+    return view('admin.pages.clients-details');
+});
+// ********************products******************************
+Route::get('/products', function () {
+    return view('admin.pages.products');
+});
+Route::get('/products-details', function () {
+    return view('admin.pages.products-details');
+});
