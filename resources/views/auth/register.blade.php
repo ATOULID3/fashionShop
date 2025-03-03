@@ -4,10 +4,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>Register</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -39,6 +40,10 @@
                   <div class="form-group">
                     <label>Password</label>
                     <input type="password" class="form-control p_input" id="password" name="password">
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="form-control p_input">
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
@@ -80,6 +85,18 @@
     <script src="../../assets/js/misc.js"></script>
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/todolist.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- endinject -->
+@if($errors->any())
+    <script>
+        Swal.fire({
+            title: 'Erreur !',
+            html: '@foreach($errors->all() as $error) {{ $error }}<br> @endforeach',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
   </body>
 </html>

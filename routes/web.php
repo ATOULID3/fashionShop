@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -55,12 +56,11 @@ Route::get('/admin', function () {
     return view('admin.pages.index');
 });
 // ********************clients******************************
-Route::get('/clients', function () {
-    return view('admin.pages.clients');
-});
-Route::get('/clients-details', function () {
-    return view('admin.pages.clients-details');
-});
+Route::get('/clients', [ClientsController::class, 'index'])->name('clients');
+Route::get('/clients-details', [ClientsController::class, 'details'])->name('clients.details');
+Route::post('/admin/clients/add', [ClientsController::class, 'store'])->name('clients.store');
+Route::delete('/admin/clients/{id}', [ClientsController::class, 'destroy'])->name('clients.destroy');
+
 // ********************products******************************
 Route::get('/products', function () {
     return view('admin.pages.products');

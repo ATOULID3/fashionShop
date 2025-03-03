@@ -19,8 +19,9 @@ class AuthController extends Controller
     public function login_trait(Request $request){
         $email = $request-> email;
         $password= $request-> password;
+        $remember = $request->has('remember');
         $credentials= ['email'=>$email,"password"=>$password];
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($credentials,$remember)){
             $request->session()->regenerate();
             return redirect('/admin');
 
@@ -45,7 +46,7 @@ class AuthController extends Controller
         $request->validate([
             'email'=>'required',
             'name'=>'required',
-            'password'=>'required',
+            'password'=>'required|confirmed',
         ]);
 
 
@@ -54,6 +55,6 @@ class AuthController extends Controller
         $registers->name = $request->name;
         $registers->password = $request->password;
         $registers->save();
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Your profile has been saved');
     }
 }

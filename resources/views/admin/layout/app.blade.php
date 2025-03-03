@@ -8,6 +8,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
@@ -399,6 +400,15 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- End custom js for this page -->
+    <!-- Custom js for this page -->
+    <script src="../../assets/js/file-upload.js"></script>
+    <script src="../../assets/js/typeahead.js"></script>
+    <script src="../../assets/js/select2.js"></script>
+    <!-- End custom js for this page -->
+    <!-- Plugin js for this page -->
+    <script src="../../assets/vendors/select2/select2.min.js"></script>
+    <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
   </body>
 </html>

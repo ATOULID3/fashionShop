@@ -8,6 +8,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -37,12 +38,12 @@
                   </div>
                   <div class="form-group">
                     <label>Password *</label>
-                    <input type="text" id="password" name="password" class="form-control p_input" required>
+                    <input type="password" id="password" name="password" class="form-control p_input" required>
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"  id="remember-me"> Remember me </label>
+                        <input type="checkbox" class="form-check-input"  id="remember" name="remember"> Remember me </label>
                     </div>
                     <a href="#" class="forgot-pass">Forgot password</a>
                   </div>
@@ -78,6 +79,17 @@
     <script src="../../assets/js/misc.js"></script>
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/todolist.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- endinject -->
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Succès !',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
   </body>
 </html>
