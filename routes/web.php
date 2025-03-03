@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -41,14 +42,15 @@ Route::get('/shopping-cart', function () {
 Route::get('/checkout', function () {
     return view('pages.shoping.checkout');
 });
+// ********************Auth******************************
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login_trait',[AuthController::class,'login_trait'])->name('login.trait');
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/ajoute_register',[AuthController::class,'ajoute_register'])->name('register.trait');
+
 // ********************admin******************************
-Route::get('/login', function () {
-    return view('auth.login');
-});
-Route::get('/register', function () {
-    return view('auth.register');
-});
-// ********************admin******************************
+Route::middleware('auth')->group(function(){
 Route::get('/admin', function () {
     return view('admin.pages.index');
 });
@@ -65,4 +67,5 @@ Route::get('/products', function () {
 });
 Route::get('/products-details', function () {
     return view('admin.pages.products-details');
+});
 });
