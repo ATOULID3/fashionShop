@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,10 +63,8 @@ Route::post('/admin/clients/add', [ClientsController::class, 'store'])->name('cl
 Route::delete('/admin/clients/{id}', [ClientsController::class, 'destroy'])->name('clients.destroy');
 
 // ********************products******************************
-Route::get('/products', function () {
-    return view('admin.pages.products');
-});
-Route::get('/products-details', function () {
-    return view('admin.pages.products-details');
-});
+Route::get('/products', [Product2Controller::class, 'index'])->name('products.index');
+Route::get('/products-details', [Product2Controller::class, 'create'])->name('products.create');
+Route::post('/products', [Product2Controller::class, 'store'])->name('products.store');
+Route::delete('/admin/products/{id}', [Product2Controller::class, 'destroy'])->name('products.destroy');
 });
