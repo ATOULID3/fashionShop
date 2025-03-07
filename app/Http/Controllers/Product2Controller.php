@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Product;
+use App\Mail\ProductAdded;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class Product2Controller extends Controller
 {
@@ -43,6 +46,10 @@ class Product2Controller extends Controller
         }
 
         $product->save();
+        $clients=Client::all()->pluck('email');
+        foreach($clients as $client){
+            Mail::to($client->email)->queue(new ProductAdded($product));
+        }
 
         return redirect()->route('products.index')->with('success', 'Product added successfully!');
     }
