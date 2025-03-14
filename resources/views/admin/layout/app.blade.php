@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -385,6 +388,7 @@
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
+    @yield('scripts')
     <script src="assets/vendors/chart.js/Chart.min.js"></script>
     <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
     <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
@@ -410,5 +414,49 @@
     <!-- Plugin js for this page -->
     <script src="../../assets/vendors/select2/select2.min.js"></script>
     <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+        <!-- jQuery & DataTables JS -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#clientsTable').DataTable({
+                    dom: 'Bfrtip', // Active les boutons d'exportation
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            text: 'Copier',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'csv',
+                            text: 'Exporter CSV',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'excel',
+                            text: 'Exporter Excel',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Exporter PDF',
+                            className: 'btn btn-danger'
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Imprimer',
+                            className: 'btn btn-info'
+                        }
+                    ]
+                });
+            });
+        </script>
   </body>
 </html>

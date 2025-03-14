@@ -9,7 +9,7 @@
                     <a class="nav-link btn btn-success create-new-button" href="{{ route('products.create') }}">+ Create New Product</a>
 
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table id="clientsTable"  class="table table-striped">
                             <thead>
                                 <tr>
                                     <th> Image </th>
